@@ -84,3 +84,21 @@ code{
   padding:18px 0;
   color:var(--muted);
 }
+
+.repo-nav{
+  border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,.25);
+}
+.repo-nav .container{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:10px 0;
+}
+.repo-nav a{
+  font-size:14px;
+  color:var(--accent);
+}
+.repo-nav .sep{
+  color:var(--muted);
+}
