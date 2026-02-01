@@ -15,3 +15,5 @@ If already cloned without submodules:
 - npm install
 - npm run typecheck
 - npm run run
+
+Note: If your system mounts /tmp with "noexec", clone this repo into an executable path (e.g., your home directory) before running npm install.
