@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Minimal Platform Contract Architecture (Case Study)</title>
+    <meta name="description" content="A minimal, contract-first platform design demonstrated through a versioned contract repo and a real consumer repo." />
+    <link rel="stylesheet" href="./assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <p class="kicker">Case Study</p>
+        <h1>A Minimal Platform Contract Architecture</h1>
+        <p class="lede">
+          When multiple services evolve independently, the first thing that breaks is not code, but contracts.
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Overview</h2>
+        <p>
+          This case study demonstrates a minimal approach to platform-level contract design using two separate repositories:
+        </p>
+        <ul>
+          <li><strong>platform</strong>: a public, versioned contract repository</li>
+          <li><strong>contract-consumer</strong>: a separate repository that consumes those contracts in real code</li>
+        </ul>
+        <p class="note">No frameworks. No infrastructure. Just contracts and usage.</p>
+      </section>
+
+      <section class="card">
+        <h2>1. The problem: implicit contracts</h2>
+        <p>In many systems, service boundaries are defined implicitly:</p>
+        <ul>
+          <li>API shapes live in controllers</li>
+          <li>Event payloads are copied across services</li>
+          <li>Error formats drift over time</li>
+        </ul>
+        <p>
+          This works until teams or services move at different speeds. The goal here was simple:
+        </p>
+        <blockquote>
+          Make contracts explicit, versioned, and independently consumable.
+        </blockquote>
+      </section>
+
+      <section class="card">
+        <h2>2. Contract-first, not service-first</h2>
+        <p>The <strong>platform</strong> repository contains only:</p>
+        <ul>
+          <li>Versioned contracts (contracts/v1)</li>
+          <li>Event payload shapes</li>
+          <li>Standard HTTP response formats</li>
+          <li>Public error codes</li>
+          <li>Lightweight runtime guards</li>
+        </ul>
+        <p>What it explicitly does not contain:</p>
+        <ul>
+          <li>Business logic</li>
+          <li>Framework code</li>
+          <li>Environment or infrastructure details</li>
+        </ul>
+        <p>
+          Contracts are treated as stable artifacts, not implementation details.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>3. Consumption as proof, not theory</h2>
+        <p>A contract repository alone proves nothing.</p>
+        <p>
+          The <strong>contract-consumer</strong> repository exists to answer one question:
+        </p>
+        <blockquote>Can a real service consume this without friction?</blockquote>
+        <p>To validate this:</p>
+        <ul>
+          <li>The platform repo is consumed as a git submodule</li>
+          <li>Contracts are imported as if they were an external package</li>
+          <li>A small handler-style function demonstrates:
+            <ul>
+              <li>input validation</li>
+              <li>error code usage</li>
+              <li>trace propagation</li>
+              <li>standard response shaping</li>
+            </ul>
+          </li>
+        </ul>
+        <p>This turns architectural intent into executable proof.</p>
+      </section>
+
+      <section class="card">
+        <h2>4. Reproducibility matters</h2>
+        <p>The consumer repository is intentionally runnable by anyone:</p>
+        <ul>
+          <li>clean clone</li>
+          <li>install dependencies</li>
+          <li>run the example</li>
+        </ul>
+        <p>
+          Even environment edge cases (such as <code>/tmp</code> mounted with <code>noexec</code>) are documented,
+          because real systems fail in real environments.
+        </p>
+        <p class="note">
+          If a design cannot be reproduced, it cannot be trusted.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>5. Why this structure scales</h2>
+        <p>This approach scales not by adding complexity, but by adding clarity:</p>
+        <ul>
+          <li>New contract versions live alongside old ones</li>
+          <li>Services choose when to upgrade</li>
+          <li>Contracts change slower than implementations</li>
+          <li>Consumers validate contracts by using them, not by reading docs</li>
+        </ul>
+        <p>The result is not a framework, but a boundary.</p>
+      </section>
+
+      <section class="card">
+        <h2>Closing thought</h2>
+        <p>
+          Platforms do not fail because of missing abstractions. They fail because boundaries are unclear.
+        </p>
+        <p>
+          This case study shows that even a minimal, boring setup can dramatically improve how services communicate
+          if contracts are treated as first-class citizens.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Published as a static page from the repository.</p>
+      </div>
+    </footer>
+
+    <script src="./assets/site.js"></script>
+  </body>
+</html>
